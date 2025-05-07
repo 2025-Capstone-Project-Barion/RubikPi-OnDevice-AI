@@ -1,5 +1,6 @@
+# hostname: rubikpi
 # passwd: rubikpi
-
+# loginas(username): root
 # ============================================
 # Node.js 설치
 # ============================================
