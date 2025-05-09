@@ -1,6 +1,34 @@
-# hostname: rubikpi
-# passwd: rubikpi
-# loginas(username): root
+# =========================
+# SSH 접속 정보 요약
+# =========================
+
+# [Rubik Pi]
+# Hostname (.local): wjrpi.local
+# Username (login as): root
+# Password: rubikpi
+# SSH Command: ssh root@wjrpi.local
+
+# [Raspberry Pi]
+# Hostname (.local): rpi.local
+# Username (login as): pi
+# Password: pi
+# SSH Command: ssh pi@rpi.local
+
+# =========================
+# VS Code SSH 원격 접속용 .ssh/config 설정 예시 (~/.ssh/config)
+# =========================
+
+# Rubik Pi 접속 설정
+Host wjrpi              # ← 이건 내가 정하는 별칭 (아무 이름 가능)
+    HostName wjrpi.local  # ← 실제 호스트 이름 또는 IP 주소
+    User root             # ← 로그인 계정 이름
+
+# Raspberry Pi 접속 설정
+Host rpi
+    HostName rpi.local
+    User pi
+
+
 # ============================================
 # Node.js 설치
 # ============================================
