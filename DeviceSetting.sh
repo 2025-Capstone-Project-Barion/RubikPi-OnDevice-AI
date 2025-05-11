@@ -28,6 +28,9 @@ Host rpi
     HostName rpi.local
     User pi
 
+# 만약 vscode SSH 연결 종료 후 재접속시 vscode원격 접속이 안될 경우 해결책
+로컬디스크/사용자/사용자이름/.ssh 디렉터리 안에 known_hosts 파일만 삭제해주고 다시 접속하면 된다.
+
 
 # ============================================
 # Node.js 설치
