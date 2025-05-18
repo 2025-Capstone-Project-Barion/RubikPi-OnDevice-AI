@@ -1,4 +1,11 @@
-# 이거 먼저 실행해서 카메라 테스팅
+# 카메라 스트리밍 전에 해당 명령어 필수입력
+`
+export XDG_RUNTIME_DIR=/dev/socket/weston  
+export WAYLAND_DISPLAY=wayland-1  
+setprop persist.overlay.use_c2d_blit 2  
+`
+
+# 카메라 스트리밍 작동 테스팅
 `
 export XDG_RUNTIME_DIR=/dev/socket/weston  
 export WAYLAND_DISPLAY=wayland-1  
