@@ -130,7 +130,7 @@ def postprocess(output_data, image, conf_threshold=0.4):
 # - 이미지 불러오기 → 전처리 → 추론 → 후처리
 # ========================
 if __name__ == "__main__":
-    image_path = "images/Input/wheel2.jpg"
+    image_path = "calib_images/1.jpg"
     orig_image, input_tensor = preprocess_image(image_path)
 
     interpreter.set_tensor(input_details[0]['index'], input_tensor)
