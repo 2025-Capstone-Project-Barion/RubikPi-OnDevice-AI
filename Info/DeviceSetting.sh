@@ -9,7 +9,7 @@
 # SSH Command: ssh root@wjrpi.local
 
 # [Raspberry Pi]
-# Hostname (.local): rpi.local
+# Hostname (.local): wjpi.local
 # Username (login as): pi
 # Password: pi
 # SSH Command: ssh pi@rpi.local
@@ -24,8 +24,8 @@ Host wjrpi              # ← 이건 내가 정하는 별칭 (아무 이름 가�
     User root             # ← 로그인 계정 이름
 
 # Raspberry Pi 접속 설정
-Host rpi
-    HostName rpi.local
+Host wjpi
+    HostName wjpi.local
     User pi
 
 # 만약 vscode SSH 연결 종료 후 재접속시 vscode원격 접속이 안될 경우 해결책
