@@ -62,6 +62,33 @@ ping google.com  # 외부 연결 확인
 
 <br>
 
+## 🔧 부팅 시 Wi-Fi 자동 연결 문제 해결 (RubikPi)
+
+RubikPi는 `/etc/wpa_supplicant.conf` 파일을 통해 Wi-Fi에 연결되도록 설정되어 있어도, **랜선을 연결하지 않은 상태에서 부팅 시 해당 Wi-Fi에 자동으로 연결되지 않는 문제가 존재**했다.
+
+### 🛠 문제 원인
+- RubikPi OS에는 `wpa_supplicant`가 `systemd` 서비스로 등록되어 있지 않아, 부팅 시 자동 실행되지 않음.
+- 따라서 `wpa_supplicant`를 명시적으로 백그라운드로 실행하지 않으면 Wi-Fi 연결이 실패함.
+
+### ✅ 해결 방법
+`/etc/rc.local` 파일을 생성하고 아래 명령을 추가하여 **부팅 시 Wi-Fi 자동 연결을 강제 실행**하도록 구성함.
+
+```bash
+#!/bin/bash
+wpa_supplicant -Dnl80211 -iwlan0 -c/etc/wpa_supplicant.conf -B
+dhclient wlan0
+exit 0
+```
+
+위 설정 입력 후 :wq로 저장 후 나와서 
+
+```bash
+chmod +x /etc/rc.local 
+```
+위 구문 입력 후 `reboot`해보면 => RubikPi는 랜선 없이도 부팅 시 노트북 핫스팟(Barion)에 자동으로 연결된다.
+
+<br>
+
 ## 1. 전체 요약
 - 라즈베리파이(wjpi)와 RubikPi는 서로 다른 방식으로 네트워크에 연결됨
 - **호스트명 충돌 방지**를 위해 라즈베리파이의 호스트명을 반드시 `wjpi`로 변경해야 함
