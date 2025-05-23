@@ -1,5 +1,7 @@
+
 import paho.mqtt.client as mqtt
 import time
+import threading
 
 # ✅ MQTT 브로커 연결 설정을 정의한다.
 broker_address = "61.74.20.97"  # 라즈베리파이에서 실행 중인 Mosquitto 브로커의 IP 주소이다.
@@ -11,12 +13,28 @@ TOPIC_START = "kiosk-start"               # 키오스크 시작 (음성명령 �
 TOPIC_CLOSE = "kiosk-close"               # 감지 종료 (메뉴 진입 시)
 TOPIC_PAY = "payment-done"                # 결제 완료 → 액추에이터 복귀
 
+# ✅ 카메라 활성 상태를 추적하는 플래그와 락 객체를 추가한다. (중복 감지 방지용 개선사항: 현재는 카메라 + yolo 서브프로그램 구동 트리거를 키오스크앱 쪽에서 사용자가 첫 wakeword시 발행하도록 되어있다. 혹여나 이 경우 사용자의 음성을 AI가 인식하지 못할 경우, 카메라가 중복으로 켜질 수 있다. 이 경우를 방지하기 위해 카메라 활성 상태를 추적하는 플래그와 락 객체를 추가하였다.)
+is_camera_active = False
+camera_lock = threading.Lock()
+
 # ✅ 하드웨어 또는 시뮬레이션용 함수들을 정의한다.
 def camera_on():
-    print("🎬 YOLO 감지 시작 (카메라 ON)")
+    global is_camera_active
+    with camera_lock:  # 스레드 충돌 방지를 위해 락 사용
+        if is_camera_active:
+            print("⚠️ YOLO 감지 이미 실행 중 (중복 무시)")
+            return
+        print("🎬 YOLO 감지 시작 (카메라 ON)")
+        is_camera_active = True  # 상태 플래그 갱신
 
 def camera_off():
-    print("📴 YOLO 감지 종료 (카메라 OFF)")
+    global is_camera_active
+    with camera_lock:
+        if not is_camera_active:
+            print("⚠️ YOLO 감지 이미 종료됨")
+            return
+        print("📴 YOLO 감지 종료 (카메라 OFF)")
+        is_camera_active = False  # 상태 플래그 갱신
 
 def actuator_up():
     print("⬆️ 리니어 액추에이터 상승 (기기 원위치)")
@@ -68,7 +86,7 @@ try:
             client.publish(TOPIC_DETECTED, "true")
             print(f"📤 발행됨: {TOPIC_DETECTED} → true")
         elif cmd == '3':
-            print("📷 카메라 상태 확인 (시뮬레이션)")
+            print("📷 카메라 상태 확인 (is_camera_active =", is_camera_active, ")")
         elif cmd.lower() == 'q':
             print("👋 프로그램 종료됨")
             break
