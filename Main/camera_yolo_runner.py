@@ -37,12 +37,17 @@ qtiqmmfsrc camera=0 !
 video/x-raw(memory:GBM),format=NV12,width=1280,height=720,framerate=30/1 !
 qtivtransform !
 qtimlvconverter !
-qtimltflite delegate=external external-delegate-path=libQnnTFLiteDelegate.so external-delegate-options="QNNExternalDelegate,backend_type=htp;" !
+qtimltflite delegate=external
+external-delegate-path=libQnnTFLiteDelegate.so
+external-delegate-options="QNNExternalDelegate,backend_type=htp;"
 model=/opt/RUBIKPi_models/YOLOv8-Detection-Quantized.tflite !
-qtimlvdetection threshold=70.0 results=10 module=yolov8 labels=/opt/RUBIKPi_models/yolov8.labels constants="YOLOv8,q-offsets=<21.0, 0.0, 0.0>,q-scales=<3.0935,0.00390625,1.0>;" !
+qtimlvdetection threshold=70.0 results=10 module=yolov8
+labels=/opt/RUBIKPi_models/yolov8.labels
+constants="YOLOv8,q-offsets=<21.0, 0.0, 0.0>,q-scales=<3.0935,0.00390625,1.0>;" !
 text/x-raw,format=utf8 !
 appsink name=meta_sink emit-signals=true
 """
+
 
 
 def main():
