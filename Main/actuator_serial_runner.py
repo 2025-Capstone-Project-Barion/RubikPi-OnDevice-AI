@@ -25,7 +25,7 @@ try:
     time.sleep(2)  # 시리얼 초기화 대기
 
     # ✅ UP → EXTEND, DOWN → RETRACT 명령 전송
-    cmd = f"{direction}\\n".encode()
+    cmd = f"{direction}\n".encode()
     ser.write(cmd)
     print(f"✔ 명령 전송 완료: {direction}")
 
