@@ -43,14 +43,14 @@ def on_new_sample(sink, data):
 # ✅ 최적화된 GStreamer 파이프라인 설정
 pipeline_str = """
 qtiqmmfsrc camera=0 !
-video/x-raw(memory:GBM),format=NV12,width=640,height=480,framerate=15/1 !
+video/x-raw(memory:GBM),format=NV12,width=1280,height=720,framerate=15/1 !
 qtivtransform !
 qtimlvconverter !
 qtimltflite delegate=external
 external-delegate-path=libQnnTFLiteDelegate.so
 external-delegate-options="QNNExternalDelegate,backend_type=htp;"
 model=/opt/RUBIKPi_models/YOLOv8-Detection-Quantized.tflite !
-qtimlvdetection threshold=70.0 results=10 module=yolov8
+qtimlvdetection threshold=40.0 results=10 module=yolov8
 labels=/opt/RUBIKPi_models/custom.labels
 constants="YOLOv8,q-offsets=<21.0, 0.0, 0.0>,q-scales=<3.0935,0.00390625,1.0>;" !
 text/x-raw,format=utf8 !
