@@ -6,7 +6,7 @@ from gi.repository import Gst, GLib
 gi.require_version('Gst', '1.0')
 Gst.init(None)
 
-MQTT_BROKER     = "61.74.20.97"
+MQTT_BROKER     = "192.168.137.229"
 TOPIC_DETECTED  = "chair-person-detected"
 
 client = mqtt.Client()
