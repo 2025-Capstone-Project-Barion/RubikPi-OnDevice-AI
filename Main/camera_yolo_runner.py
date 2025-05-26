@@ -43,7 +43,7 @@ def on_new_sample(sink, data):
 # ✅ 최적화된 GStreamer 파이프라인 설정
 pipeline_str = """
 qtiqmmfsrc camera=0 !
-video/x-raw(memory:GBM),format=NV12,width=1280,height=720,framerate=15/1 !
+video/x-raw(memory:GBM),format=NV12,width=1280,height=720,framerate=30/1 !
 qtivtransform !
 qtimlvconverter !
 qtimltflite delegate=external
