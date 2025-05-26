@@ -2,7 +2,6 @@ import gi
 import paho.mqtt.client as mqtt
 from gi.repository import Gst, GLib
 
-# ✅ GStreamer 및 MQTT 초기화
 gi.require_version('Gst', '1.0')
 Gst.init(None)
 
@@ -13,7 +12,11 @@ client = mqtt.Client()
 client.connect(MQTT_BROKER, 1883, 60)
 client.loop_start()
 
+# ✅ 감지 플래그
+is_detected = False
+
 def on_new_sample(sink, data):
+    global is_detected
     sample = sink.emit("pull-sample")
     if sample:
         buf = sample.get_buffer()
@@ -25,8 +28,12 @@ def on_new_sample(sink, data):
                     has_chair  = "label\\=\\(string\\)chair" in meta
                     has_person = "label\\=\\(string\\)person" in meta
                     if has_chair and has_person:
-                        print("🟢 의자+사람 동시 감지! → MQTT 발행")
-                        client.publish(TOPIC_DETECTED, "true")
+                        if not is_detected:
+                            print("🟢 의자+사람 동시 감지! → MQTT 발행")
+                            client.publish(TOPIC_DETECTED, "true")
+                            is_detected = True
+                        else:
+                            print("⚠️ 이미 탐지됨 → MQTT 중복 발행 생략")
             except Exception as e:
                 print("❌ 메타데이터 처리 실패:", e)
         buf.unmap(info)
@@ -47,8 +54,6 @@ constants="YOLOv8,q-offsets=<21.0, 0.0, 0.0>,q-scales=<3.0935,0.00390625,1.0>;" 
 text/x-raw,format=utf8 !
 appsink name=meta_sink emit-signals=true
 """
-
-
 
 def main():
     pipeline = Gst.parse_launch(pipeline_str)
