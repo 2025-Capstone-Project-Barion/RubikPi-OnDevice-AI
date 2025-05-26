@@ -22,7 +22,7 @@ try:
     ser.write(b'DOWN\n')
     print(" 'DOWN' 명령 전송 완료 (최소 길이로 줄이기)")
 
-    time.sleep(15)  # 동작 시간 대기
+    time.sleep(16)  # 동작 시간 대기 + 1 (15초 동작 + 1초 여유)
     ser.close()
     print(" 시리얼 포트 닫힘")
 
