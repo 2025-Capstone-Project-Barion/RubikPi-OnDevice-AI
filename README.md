@@ -1,10 +1,9 @@
 # RubikPi-OnDevice-AI
 
 ## 프로젝트 개요
-본 시스템은 스마트 배리어프리 키오스크 플랫폼에서 On-Device AI 기반 객체탐지를 수행하는 RubikPi (Qualcomm QCS6490 기반 보드) 관련 레포지토리이다.  
-RubikPi는 연결된 카메라로부터 실시간 영상을 수신하고, Qualcomm intelligent multimedia software development kit (QIM SDK)를 활용한 YOLOv8 기반 객체 탐지를 수행하여, 사람과 휠체어가 동시에 탐지되었을 때 시리얼 및 MQTT 신호를 송-수신한다.
 
-<br>
+본 시스템은 스마트 배리어프리 키오스크 플랫폼에서 On-Device AI 기반 객체탐지를 수행하는 RubikPi (Qualcomm QCS6490 기반 보드) 관련 레포지토리이다.
+RubikPi는 연결된 카메라로부터 실시간 영상을 수신하고, Qualcomm intelligent multimedia software development kit (QIM SDK)를 활용한 YOLOv8 기반 객체 탐지를 수행하여, 사람과 휠체어가 동시에 탐지되었을 때 시리얼 및 MQTT 신호를 송-수신한다.
 
 ## 시스템 구성 흐름
 
@@ -25,8 +24,6 @@ RubikPi는 연결된 카메라로부터 실시간 영상을 수신하고, Qualco
  │            │                                                       │
  └──→ appsink  ← 텍스트 메타데이터만 따로 파이썬에서 받아오기 ←───────┘
 ```
-
-<br>
 
 ## GStreamer 파이프라인
 
@@ -57,27 +54,42 @@ detection_tee. ! queue ! text/x-raw,format=utf8 ! appsink name=meta_sink emit-si
 detection_tee. ! queue ! text/x-raw,format=utf8 ! meta_mux.
 ```
 
-<br>
-
 ## GStreamer 플러그인 설명 (QIM SDK 기반)
 
-| 플러그인          | 설명                                        |
-| ----------------- | ------------------------------------------- |
+| 플러그인              | 설명                                 |
+| ----------------- | ---------------------------------- |
 | `qtiqmmfsrc`      | 카메라 소스 입력 (Qualcomm 전용 MIPI)       |
-| `qtivtransform`   | 프레임 포맷/크기 변환 및 전처리             |
-| `tee`             | 추론 및 디스플레이 경로로 분기              |
-| `qtimlvconverter` | ML 모델 입력 형식으로 변환                  |
+| `qtivtransform`   | 프레임 포맷/크기 변환 및 전처리                 |
+| `tee`             | 추론 및 디스플레이 경로로 분기                  |
+| `qtimlvconverter` | ML 모델 입력 형식으로 변환                   |
 | `qtimltflite`     | TFLite 양자화 모델 실행 (QNN Delegate 사용) |
-| `qtimlvdetection` | YOLOv8 출력 후처리 및 메타 생성             |
-| `qtimetamux`      | 메타데이터를 영상 프레임에 합성             |
-| `qtioverlay`      | 탐지 결과를 화면에 시각화                   |
-| `appsink`         | 파이썬에서 메타데이터를 수신 처리           |
-
-<br>
+| `qtimlvdetection` | YOLOv8 출력 후처리 및 메타 생성              |
+| `qtimetamux`      | 메타데이터를 영상 프레임에 합성                  |
+| `qtioverlay`      | 탐지 결과를 화면에 시각화                     |
+| `appsink`         | 파이썬에서 메타데이터를 수신 처리                 |
 
 ## 주요 기능
 
-- Qualcomm Ai Hub에서 Compile & Qunatized를 거친 Quantized YOLOv8 기반 실시간 객체 탐지  
-- GStreamer 기반 영상 출력 및 메타데이터 추출  
-- 휠체어 + 사람 동시 탐지 시 시리얼 통신 송신  
-- 키오스크 제어를 담당하는 RaspberryPi에 MQTT 메시지 송신  
+* Qualcomm Ai Hub에서 Compile & Qunatized를 거친 Quantized YOLOv8 기반 실시간 객체 탐지
+* GStreamer 기반 영상 출력 및 메타데이터 추출
+* 휠체어 + 사람 동시 탐지 시 시리얼 통신 송신
+* 키오스크 제어를 담당하는 RaspberryPi에 MQTT 메시지 송신
+
+<br>
+
+## AI 모델 최적화 및 성능 비교 (Qualcomm AI Hub 기반)
+
+
+| 항목               | float32 모델 | int8 양자화 모델 | 성능 개선      |
+| ------------------ | ------------ | ---------------- | -------------- |
+| **최소 추론 시간** | 64.8 ms      | 4.6 ms           | 약 14배 빠름   |
+| **평균 추론 시간** | 83.8 ms      | 7.0 ms           | 약 12배 빠름   |
+| **메모리 사용량**  | 9~52MB       | 0~29MB           | 최대 44% 절감  |
+| **Compute Unit**   | GPU 455 중심 | NPU 278 중심     | 전력 효율 증가 |
+
+
+* 모델 입력 크기: `(1, 640, 640, 3)`
+* 실행 디바이스: `QCS6490 Proxy (RubikPi)`
+* 프로파일링 도구: `Qualcomm AI Hub`
+
+> 📌 이 성능 비교는 Qualcomm AI Hub에서 제공하는 실제 장치 기반 Proxy 디바이스를 기준으로 측정
