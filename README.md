@@ -6,7 +6,7 @@
 Qualcomm QCS6490 칩셋 기반의 RubikPi 보드를 활용하여 Qualcomm Ai Hub를 통해 최적화 과정을 거친 YOLOv8 모델을 Qualcomm Intelligent Multimedia Software Development Kit(QIM SDK) 및 Neural Processing Unit(NPU)을 이용해 최적화하고,  
 휠체어와 사람을 실시간으로 탐지하여 시리얼 통신 및 MQTT 통신을 수행 -> 키오스크의 높낮이를 조절하여 기존 터치디스플레이를 배리어프리 키오스크로써 역할하도록 제어한다.
 
-------
+<br>
 
 ## 시스템 구성 흐름
 
@@ -28,7 +28,7 @@ Qualcomm QCS6490 칩셋 기반의 RubikPi 보드를 활용하여 Qualcomm Ai Hub
  └───→ appsink (메타데이터를 별도 Python 프로그램에서 처리) ←───┘
 ```
 
-------
+<br>
 
 ## GStreamer 파이프라인
 
@@ -59,7 +59,7 @@ detection_tee. ! queue ! text/x-raw,format=utf8 ! appsink name=meta_sink emit-si
 detection_tee. ! queue ! text/x-raw,format=utf8 ! meta_mux.
 ```
 
-------
+<br>
 
 ## GStreamer 플러그인 설명 (QIM SDK 기반)
 
@@ -75,7 +75,7 @@ detection_tee. ! queue ! text/x-raw,format=utf8 ! meta_mux.
 | `qtioverlay`      | 탐지 결과를 화면에 시각화                   |
 | `appsink`         | 파이썬에서 메타데이터를 수신 처리           |
 
-------
+<br>
 
 ## 주요 기능
 
@@ -84,11 +84,12 @@ detection_tee. ! queue ! text/x-raw,format=utf8 ! meta_mux.
 - 휠체어와 사람 동시 탐지 시, 시리얼 및 MQTT 기반 메시지 송수신
 - RaspberryPi 기반 키오스크 시스템과의 안정적인 MQTT 메시지 교환
 
-------
+
+<br>
 
 ## AI 모델 성능 분석 및 비교 (Qualcomm AI Hub 프로파일링 결과)
 
-본 프로젝트에서는 Qualcomm AI Hub를 통해 float32 기반과 INT8 양자화 모델을 프로파일링하고 성능 분석을 진행하였습니다.
+본 시스템에서는 Qualcomm AI Hub를 활용하여 YOLOv8 모델을 FlOAT32 -> INT8로 양자화해 RubikPi의 QCS6490 칩셋에서 최적의 성능을 도출했다. 최적화 전후 성능 비교 결과는 다음과 같다.
 
 | 항목               | Float32 모델  | INT8 양자화 모델 | 성능 개선         |
 | ------------------ | ------------- | ---------------- | ----------------- |
@@ -103,10 +104,14 @@ detection_tee. ! queue ! text/x-raw,format=utf8 ! meta_mux.
 
 이러한 AI모델 최적화는 모델 성능과 전력 효율성을 크게 향상시키기에 RubikPi와 같은 On-Device Ai IOT디바이스에 매우 적합하고, 실시간 객체 탐지가 필수적인 스마트 배리어프리 키오스크 플랫폼에 매우 적합하다.
 
-------
+<br>
 
-## 결론
+## 📌 결론 및 기대 효과
 
-본 시스템은 Qualcomm의 QCS6490 칩셋기반의 RubikPi IOT보드와 Qualcomm AI Hub를 활용한 YOLOv8 모델 최적화 기술을 적용하여,  
-실시간으로 정확하고 효율적인 객체 탐지 시스템을 구축하였다.  
-이는 앞으로 우리가 진행한 스마트 배리어프리 키오스크 플렛폼과 같은 사용자의 접근성과 사용자 경험의 개선이 요구되는 여러 분야에 크게 기여할 것으로 기대가 된다. 
+본 시스템은 Qualcomm QCS6490 칩셋 기반의 RubikPi 보드와 Qualcomm AI Hub의 양자화 최적화 기술을 바탕으로, 실시간 객체 탐지에 최적화된 온디바이스 AI 시스템을 구현하였다.
+기존의 서버 의존적 구조와 달리 RubikPi 단독으로도 빠르고 정확한 탐지가 가능하며, 낮은 전력 소비와 짧은 응답 시간으로 실사용 환경에서의 효율성과 신뢰성을 확보하였다.
+
+특히 본 시스템은 키오스크와 같은 제한된 공간, 제한된 자원 환경에서도 실시간으로 휠체어 및 사람의 동시 탐지가 가능하며, MQTT 및 시리얼 통신을 통해 하드웨어 제어와 사용자 안내까지 확장 가능하다.
+
+이는 추후 스마트 배리어프리 키오스크 플랫폼을 비롯하여 접근성과 반응성이 요구되는 다양한 현장 중심의 시스템에 유의미한 기여를 할 수 있으며, 향후 다양한 분야로의 확장 가능성 또한 높다고 판단된다.
+
