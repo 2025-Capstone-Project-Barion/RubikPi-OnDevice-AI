@@ -1,3 +1,4 @@
+# 노트북에서 실행예정
 import time
 import serial
 from serial.tools import list_ports
