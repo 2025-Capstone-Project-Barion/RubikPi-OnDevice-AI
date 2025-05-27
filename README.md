@@ -85,11 +85,24 @@ detection_tee. ! queue ! text/x-raw,format=utf8 ! meta_mux.
 - RaspberryPi 기반 키오스크 시스템과의 안정적인 MQTT 메시지 교환
 
 
+<br><br>
+
+# 📊 AI 모델 성능 분석 및 비교 (Qualcomm AI Hub 프로파일링 결과)
+
+본 시스템에서는 Qualcomm AI Hub를 활용하여 YOLOv8 모델을 FlOAT32 -> INT8로 양자화해 RubikPi의 QCS6490 칩셋 환경에서 최적의 성능을 도출하였다. 최적화 전후 성능 비교 결과는 다음과 같다.
+
 <br>
 
-## AI 모델 성능 분석 및 비교 (Qualcomm AI Hub 프로파일링 결과)
+<p align="center"> 
+     
+### 🔹 Quantized 이전 YOLOv8n (float32) 모델의 성능 지표
+<img src="https://github.com/user-attachments/assets/019cf71d-68fd-4e34-af24-d5059d5e2245" width="720"/> <img src="https://github.com/user-attachments/assets/8815fc9d-533c-453b-a8fa-bf55ad8f2fab" width="720"/>
 
-본 시스템에서는 Qualcomm AI Hub를 활용하여 YOLOv8 모델을 FlOAT32 -> INT8로 양자화해 RubikPi의 QCS6490 칩셋에서 최적의 성능을 도출했다. 최적화 전후 성능 비교 결과는 다음과 같다.
+### 🔹 Quantized 이후 YOLOv8n (int8) 최적화 모델의 성능 지표
+<img src="https://github.com/user-attachments/assets/0f07c660-a0b6-48e8-9f06-6e203368ec96" width="720"/> <img src="https://github.com/user-attachments/assets/a1ac2f4f-6b8f-4360-98f4-c9894851f8e1" width="720"/>
+
+<br>
+
 
 | 항목               | Float32 모델  | INT8 양자화 모델 | 성능 개선         |
 | ------------------ | ------------- | ---------------- | ----------------- |
@@ -102,7 +115,8 @@ detection_tee. ! queue ! text/x-raw,format=utf8 ! meta_mux.
 - 타겟 디바이스: `Qualcomm QCS6490 (RubikPi)`
 - 프로파일링 도구: `Qualcomm AI Hub`
 
-이러한 AI모델 최적화는 모델 성능과 전력 효율성을 크게 향상시키기에 RubikPi와 같은 On-Device Ai IOT디바이스에 매우 적합하고, 실시간 객체 탐지가 필수적인 스마트 배리어프리 키오스크 플랫폼에 매우 적합하다.
+> 이러한 AI모델 최적화는 모델 성능과 전력 효율성을 모두 개선하여, RubikPi와 같은 온디바이스 AI IoT 환경에 매우 적합하다.
+> 특히 실시간 탐지가 필수적인 스마트 배리어프리 키오스크 플랫폼에서 뛰어난 성능을 발휘할 수 있다.  
 
 <br>
 
