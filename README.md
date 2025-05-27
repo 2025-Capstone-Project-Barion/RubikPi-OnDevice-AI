@@ -87,9 +87,11 @@ detection_tee. ! queue ! text/x-raw,format=utf8 ! meta_mux.
 
 <br><br>
 
-# 📊 AI 모델 성능 분석 및 비교 (Qualcomm AI Hub 프로파일링 결과)
+# 📊 AI 모델 Optimization 성능 분석 및 비교
+>  (Qualcomm AI Hub 프로파일링 결과)
 
-본 시스템에서는 Qualcomm AI Hub를 활용하여 YOLOv8 모델을 FlOAT32 -> INT8로 양자화해 RubikPi의 QCS6490 칩셋 환경에서 최적의 성능을 도출하였다. 최적화 전후 성능 비교 결과는 다음과 같다.
+본 시스템에서는 Qualcomm AI Hub를 활용하여 YOLOv8 모델을 `FlOAT32 -> INT8로 양자화`해 RubikPi의 QCS6490 칩셋 환경에서 최적의 성능을 도출하였다.  
+최적화 전후 성능 비교 결과는 다음과 같다.
 
 <br>
 
