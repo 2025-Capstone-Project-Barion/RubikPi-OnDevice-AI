@@ -8,6 +8,22 @@ Qualcomm QCS6490 칩셋 기반의 RubikPi 보드를 활용하여 Qualcomm Ai Hub
 
 <br>
 
+
+## 🛠 Tech Stack
+
+### 🤖 RUBIK Pi: On-Device AI
+
+|Category|Technology|
+|-|-|
+|<div align="center">**On-Device AIoT Platform**</div>|<div align="center"><img src="https://img.shields.io/badge/RUBIK Pi 3-3253DC?style=for-the-badge&logo=sequelize&logoColor=white"></div>|
+|<div align="center">**Object Detection AI**</div>|<div align="center">![YOLOv8](https://img.shields.io/badge/YOLOv8-Quantized-111F68?style=for-the-badge&logo=yolo&logoColor=white)</div>|
+|<div align="center">**Hardware**</div>|<div align="center">**📷 Pi Camera Module 2 (IMX219)** </div>|  
+|<div align="center">**IoT Communication**</div>|<div align="center">![MQTT](https://img.shields.io/badge/MQTT-mosquitto-FF9900?style=for-the-badge&logo=mqtt&logoColor=white)</div>|
+|<div align="center">**Programming Language**</div>|<div align="center">![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)</div>|
+
+<br>
+
+
 ## 시스템 구성 흐름
 
 <p align="center"><img src="https://github.com/user-attachments/assets/0983eb30-042d-4870-8689-84137a37d9a2" width="700" /></p>
