@@ -10,6 +10,10 @@ Qualcomm QCS6490 칩셋 기반의 RubikPi 보드를 활용하여 Qualcomm Ai Hub
 
 ## 시스템 구성 흐름
 
+<p align="center"><img src="https://github.com/user-attachments/assets/0983eb30-042d-4870-8689-84137a37d9a2" width="700" /></p>
+
+<br>
+
 ```plaintext
 [카메라 입력]
      │  qtiqmmfsrc
