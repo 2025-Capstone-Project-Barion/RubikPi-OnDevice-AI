@@ -4,7 +4,7 @@
 
 본 프로젝트는 Qualcomm과의 산학협력으로 진행된 스마트 배리어프리 키오스크 플랫폼 내 On-Device AI 기반 객체탐지 시스템 구현을 목적으로 한다.  
 Qualcomm QCS6490 칩셋 기반의 RubikPi 보드를 활용하여 Qualcomm Ai Hub를 통해 최적화 과정을 거친 YOLOv8 모델을 Qualcomm Intelligent Multimedia Software Development Kit(QIM SDK) 및 Neural Processing Unit(NPU)을 이용해 최적화하고,  
-휠체어와 사람을 실시간으로 탐지하여 시리얼 통신 및 MQTT 통신을 수행 -> 키오스크의 높낮이를 조절하여 기존 터치디스플레이를 배리어프리 키오스크로써 역할하도록 제어한다.
+휠체어와 사람을 실시간으로 탐지하여 Arduino와 시리얼 통신 및 MQTT 통신을 수행 -> 리니어 액추에이터를 통해 키오스크의 높낮이를 조절하여 기존 터치디스플레이를 배리어프리 키오스크로써 역할하도록 제어한다.
 
 <br>
 
